@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+Booking History
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">Booking History</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+            <th>Booking ID</th>
+            <th>Trek Name</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for booking in bookings %}
+
+        <tr>
+
+            <td>{{ booking.id }}</td>
+
+            <td>
+                {% if booking_treks[booking.id] %}
+                    {{ booking_treks[booking.id].name }}
+                {% else %}
+                    Trek Deleted
+                {% endif %}
+            </td>
+
+            <td>{{ booking.booking_date }}</td>
+
+            <td>{{ booking.status }}</td>
+
+            <td>
+
+                {% if booking.status == "Booked" %}
+
+                    <a href="{{ url_for('cancel_booking', id=booking.id) }}"
+                       class="btn btn-danger btn-sm">
+
+                        Cancel
+
+                    </a>
+
+                {% else %}
+
+                    <span class="text-muted">
+                        No Action
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% else %}
+
+        <tr>
+
+            <td colspan="5" class="text-center">
+                No bookings found.
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

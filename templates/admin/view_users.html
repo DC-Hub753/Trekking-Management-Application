@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Users
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">Manage Users</h2>
+
+
+<form method="GET" class="row g-2 mb-4">
+
+    <div class="col-md-10">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search user by ID or name or email"
+            value="{{ search }}"
+        >
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button
+            type="submit"
+            class="btn btn-primary w-100">
+
+            Search
+
+        </button>
+
+    </div>
+
+</form>
+
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Blacklisted</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for user in users %}
+
+    <tr>
+
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+
+        <td>
+
+        {% if user.is_blacklisted %}
+            <span class="badge bg-danger">Yes</span>
+        {% else %}
+            <span class="badge bg-success">No</span>
+        {% endif %}
+
+        </td>
+
+        <td>
+
+        {% if not user.is_blacklisted %}
+
+        <a href="/admin/blacklist-user/{{ user.id }}"
+           class="btn btn-danger btn-sm">
+
+           Blacklist
+
+        </a>
+
+        {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

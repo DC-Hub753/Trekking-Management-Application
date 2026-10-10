@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Trek
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">Edit Trek</h2>
+
+<div class="row justify-content-center">
+
+<div class="col-md-8">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Trek Name</label>
+<input type="text" class="form-control" name="name" value="{{ trek.name }}" required>
+</div>
+
+<div class="mb-3">
+<label>Location</label>
+<input type="text" class="form-control" name="location" value="{{ trek.location }}" required>
+</div>
+
+<div class="mb-3">
+
+<label>Difficulty</label>
+
+<select name="difficulty" class="form-control">
+
+<option {% if trek.difficulty=="Easy" %}selected{% endif %}>Easy</option>
+
+<option {% if trek.difficulty=="Moderate" %}selected{% endif %}>Moderate</option>
+
+<option {% if trek.difficulty=="Hard" %}selected{% endif %}>Hard</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Duration</label>
+
+<input
+type="number"
+class="form-control"
+name="duration"
+value="{{ trek.duration }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Available Slots</label>
+
+<input
+type="number"
+class="form-control"
+name="slots"
+value="{{ trek.slots }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Status</label>
+
+<select name="status" class="form-control">
+
+<option {% if trek.status=="Open" %}selected{% endif %}>Open</option>
+
+<option {% if trek.status=="Closed" %}selected{% endif %}>Closed</option>
+
+<option {% if trek.status=="Completed" %}selected{% endif %}>Completed</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-success w-100">
+
+Update Trek
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

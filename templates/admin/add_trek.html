@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Trek
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">Add New Trek</h2>
+
+<div class="row justify-content-center">
+
+<div class="col-md-8">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Trek Name</label>
+<input type="text" class="form-control" name="name" required>
+</div>
+
+<div class="mb-3">
+<label>Location</label>
+<input type="text" class="form-control" name="location" required>
+</div>
+
+<div class="mb-3">
+<label>Difficulty</label>
+
+<select class="form-control" name="difficulty">
+
+<option>Easy</option>
+<option>Moderate</option>
+<option>Hard</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Duration (Days)</label>
+
+<input
+type="number"
+class="form-control"
+name="duration"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Available Slots</label>
+
+<input
+type="number"
+class="form-control"
+name="slots"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Start Date</label>
+
+<input
+type="date"
+class="form-control"
+name="start_date"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>End Date</label>
+
+<input
+type="date"
+class="form-control"
+name="end_date"
+required>
+
+</div>
+
+<button class="btn btn-success w-100">
+
+Add Trek
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

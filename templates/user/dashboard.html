@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">User Dashboard</h2>
+
+<h4>Available Treks</h4>
+
+{% if available_treks %}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Trek</th>
+        <th>Location</th>
+        <th>Difficulty</th>
+        <th>Duration</th>
+    </tr>
+
+    {% for trek in available_treks %}
+    <tr>
+        <td>{{ trek.name }}</td>
+        <td>{{ trek.location }}</td>
+        <td>{{ trek.difficulty }}</td>
+        <td>{{ trek.duration }} Day{% if trek.duration != 1 %}s{% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<p>No available treks currently.</p>
+
+{% endif %}
+
+
+<h4 class="mt-4">My Booked Treks</h4>
+
+{% if booked_treks %}
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for trek in booked_treks %}
+
+        <tr>
+            <td>{{ trek.name }}</td>
+            <td>{{ trek.location }}</td>
+
+            <td>
+                {% if trek.start_date == trek.end_date %}
+                    {{ trek.start_date.strftime('%d-%b-%Y') }}
+                {% else %}
+                    {{ trek.start_date.strftime('%d') }}–{{ trek.end_date.strftime('%d-%b-%Y') }}
+                {% endif %}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<p>You have no booked treks.</p>
+
+{% endif %}
+
+{% endblock %}

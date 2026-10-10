@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assign Trek
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">
+
+Assign Trek
+
+</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Select Trek</label>
+
+<select class="form-control" name="trek_id">
+
+{% for trek in treks %}
+
+<option value="{{ trek.id }}">
+
+{{ trek.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button class="btn btn-primary">
+
+Assign
+
+</button>
+
+</form>
+
+{% endblock %}
