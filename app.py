@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template
 
 from werkzeug.security import generate_password_hash
@@ -26,7 +28,8 @@ app = Flask(__name__)
 # Configuration
 # -----------------------------
 
-app.config["SECRET_KEY"] = "TrekkingApp_MAD1_2026_Final"
+#app.config["SECRET_KEY"] = "TrekkingApp_MAD1_2026_Final"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     "sqlite:///" + DB_PATH
@@ -41,7 +44,33 @@ app.config[
 # Initialize Database
 # -----------------------------
 
+#db.init_app(app)
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+
 db.init_app(app)
+
+with app.app_context():
+    db.create_all()
+
+    # Create initial admin from environment variables
+    admin_username = os.environ.get("ADMIN_USERNAME")
+    admin_password = os.environ.get("ADMIN_PASSWORD")
+
+    if admin_username and admin_password:
+        from werkzeug.security import generate_password_hash
+        from models import Admin
+
+        admin = Admin.query.filter_by(
+            username=admin_username
+        ).first()
+
+        if not admin:
+            admin = Admin(
+                username=admin_username,
+                password=generate_password_hash(admin_password)
+            )
+            db.session.add(admin)
+            db.session.commit()
 
 
 # -----------------------------
@@ -81,47 +110,4 @@ register_staff_routes(app)
 # -----------------------------
 
 if __name__ == "__main__":
-
-    with app.app_context():
-
-        import os
-
-        os.makedirs(
-            "instance",
-            exist_ok=True
-        )
-
-        db.create_all()
-
-        # Create default Admin only once
-
-        admin = Admin.query.filter_by(
-            username="admin"
-        ).first()
-
-        if not admin:
-
-            admin = Admin(
-
-                username="admin",
-
-                password=generate_password_hash(
-                    "admin123"
-                )
-            )
-
-            db.session.add(admin)
-
-            db.session.commit()
-
-            print(
-                "✅ Default Admin Created"
-            )
-
-        else:
-
-            print(
-                "✅ Admin Already Exists"
-            )
-
     app.run(debug=False)
